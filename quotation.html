@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safesol | Request a Quote</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Blue Shades Color Palette */
+        :root {
+            --blue-deep: #0a2b4e;
+            --blue-dark: #1e3a5f;
+            --blue-medium: #2c4e6e;
+            --blue-accent: #4a90d9;
+            --white: #ffffff;
+            --gray: #e5e7eb;
+            --text-light: #6b7280;
+            --text-dark: #1f2937;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 43, 78, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(94, 143, 185, 0.3);
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 0;
+            background: rgba(5, 26, 47, 0.98);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--blue-accent), var(--blue-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--blue-accent);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #7eafe0;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--blue-deep), var(--blue-dark));
+            padding: 150px 0 60px;
+            text-align: center;
+            color: white;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Quotation Section */
+        .quotation-section {
+            padding: 80px 0;
+        }
+
+        .quotation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        /* Form Styles */
+        .quotation-form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--gray);
+        }
+
+        .quotation-form-container h3 {
+            font-size: 1.5rem;
+            color: var(--blue-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .quotation-form-container p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--blue-dark);
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: var(--blue-accent);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--blue-accent);
+            box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .radio-group input {
+            width: auto;
+        }
+
+        /* Cart Items Display */
+        .cart-items-preview {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray);
+        }
+
+        .cart-items-preview h4 {
+            color: var(--blue-dark);
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .cart-preview-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .cart-preview-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .cart-preview-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-preview-total {
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 2px solid var(--gray);
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            color: var(--blue-dark);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--blue-accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-submit:hover {
+            background: var(--blue-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Info Sidebar */
+        .quotation-info {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-deep));
+            padding: 2rem;
+            border-radius: 20px;
+            color: white;
+            height: fit-content;
+        }
+
+        .quotation-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quotation-info ul {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .quotation-info li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .quotation-info li:last-child {
+            border-bottom: none;
+        }
+
+        .quotation-info i {
+            width: 25px;
+            color: var(--blue-accent);
+            font-size: 1.1rem;
+        }
+
+        .contact-direct {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .contact-direct p {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-direct i {
+            width: 25px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--blue-deep);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #7eafe0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--blue-dark);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .quotation-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--blue-deep);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: 0.3s ease;
+                gap: 2rem;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            .radio-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .quotation-form-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-broom"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Safesol Crystal Limited</h1>
+                    <p>CLEANING SOLUTIONS</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="quotation.html" class="active">Quotation</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="animate-fade-up">Request a Quote</h1>
+                <p class="animate-fade-up delay-1">Tell us about your cleaning needs and we'll get back to you within 24 hours</p>
+            </div>
+        </section>
+
+        <section class="quotation-section">
+            <div class="container">
+                <div class="quotation-grid">
+                    <!-- Quotation Form -->
+                    <div class="quotation-form-container">
+                        <h3><i class="fas fa-pen-alt"></i> Get Your Free Quote</h3>
+                        <p>Fill out the form below and we'll respond promptly</p>
+
+                        <!-- Cart Items Preview -->
+                        <div id="cartPreview" class="cart-items-preview" style="display: none;">
+                            <h4><i class="fas fa-shopping-cart"></i> Your Selected Items</h4>
+                            <div id="cartPreviewList" class="cart-preview-list"></div>
+                            <div class="cart-preview-total">
+                                <span>Total Amount:</span>
+                                <span id="previewTotal">KSh 0</span>
+                            </div>
+                        </div>
+
+                        <form id="quotationForm">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-envelope"></i> Email Address *</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-phone"></i> Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="e.g., 0712345678" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> Location/Address</label>
+                                <input type="text" id="location" name="location" placeholder="Nairobi, Kenya">
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-concierge-bell"></i> Service Interested In</label>
+                                <select id="service">
+                                    <option value="">Select a service</option>
+                                    <option value="residential">Residential Cleaning</option>
+                                    <option value="office">Office/Commercial Cleaning</option>
+                                    <option value="industrial">Industrial Cleaning</option>
+                                    <option value="carpet">Carpet & Upholstery</option>
+                                    <option value="windows">Window Cleaning</option>
+                                    <option value="disinfection">Disinfection Services</option>
+                                    <option value="products">Cleaning Products</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar"></i> Preferred Date</label>
+                                <input type="date" id="preferredDate">
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-comment"></i> Your Message / Questions *</label>
+                                <textarea id="message" rows="5" placeholder="Please describe what you need, including any specific requirements..." required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-comment-dots"></i> Preferred Contact Method</label>
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="preferredContact" value="phone"> Phone Call
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="preferredContact" value="whatsapp"> WhatsApp
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="preferredContact" value="email"> Email
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Send Request</button>
+                        </form>
+                    </div>
+
+
+                    <!-- Information Sidebar -->
+                    <div class="quotation-info">
+                        <h3><i class="fas fa-info-circle"></i> Why Choose Safesol?</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Free consultation & quote</li>
+                            <li><i class="fas fa-check-circle"></i> Same-day response guaranteed</li>
+                            <li><i class="fas fa-check-circle"></i> Professional & insured staff</li>
+                            <li><i class="fas fa-check-circle"></i> Eco-friendly products available</li>
+                            <li><i class="fas fa-check-circle"></i> Competitive pricing</li>
+                            <li><i class="fas fa-check-circle"></i> 100% satisfaction guaranteed</li>
+                        </ul>
+
+                        <div class="contact-direct">
+                            <h4><i class="fas fa-headset"></i> Contact Directly</h4>
+                            <p><i class="fas fa-phone"></i> 0723457235</p>
+                            <p><i class="fas fa-envelope"></i> info@safesol.co.ke</p>
+                            <p><i class="fas fa-clock"></i> Mon-Sat: 8AM - 6PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+ 
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Safesol</h3>
+                    <p>Your trusted partner for professional cleaning solutions in Kenya.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="quotation.html">Quotation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> 0723457235</p>
+                    <p><i class="fas fa-envelope"></i> info@safesol.co.ke</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Safesol Cleaning Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Load cart items from localStorage
+        function loadCartPreview() {
+            const cart = JSON.parse(localStorage.getItem('safesolCart')) || [];
+            const cartPreview = document.getElementById('cartPreview');
+            const cartPreviewList = document.getElementById('cartPreviewList');
+            const previewTotal = document.getElementById('previewTotal');
+
+            if (cart.length > 0) {
+                cartPreview.style.display = 'block';
+                
+                let itemsHtml = '';
+                let total = 0;
+                
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    itemsHtml += `
+                        <div class="cart-preview-item">
+                            <span>${item.name} x ${item.quantity}</span>
+                            <span>KSh ${itemTotal.toLocaleString()}</span>
+                        </div>
+                    `;
+                });
+                
+                cartPreviewList.innerHTML = itemsHtml;
+                previewTotal.innerHTML = `KSh ${total.toLocaleString()}`;
+                
+                // Add cart items to hidden field or message
+                const cartMessage = cart.map(item => `${item.name} x ${item.quantity} - KSh ${(item.price * item.quantity).toLocaleString()}`).join('\n');
+                const messageField = document.getElementById('message');
+                if (messageField && cartMessage) {
+                    const existingMessage = messageField.value;
+                    if (!existingMessage.includes('Selected Products:')) {
+                        messageField.value = `Selected Products:\n${cartMessage}\n\n${existingMessage}`;
+                    }
+                }
+            } else {
+                cartPreview.style.display = 'none';
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
+            notification.style.background = type === 'success' ? '#1e3a5f' : '#9e2a2a';
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 5000);
+        }
+
+        // Form validation and submission
+        document.getElementById('quotationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // Validation
+            if (!name || !email || !phone || !message) {
+                showNotification('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showNotification('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Phone validation
+            const phoneRegex = /^(07|01|2547|2541)[0-9]{8}$/;
+            if (!phoneRegex.test(phone) && !phone.match(/^[0-9]{10,12}$/)) {
+                showNotification('Please enter a valid Kenyan phone number (e.g., 0712345678)', 'error');
+                return;
+            }
+            
+            // Get cart items
+            const cart = JSON.parse(localStorage.getItem('safesolCart')) || [];
+            const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            // Prepare quote data
+            const quoteData = {
+                name: name,
+                email: email,
+                phone: phone,
+                location: document.getElementById('location').value,
+                service: document.getElementById('service').value,
+                preferredDate: document.getElementById('preferredDate').value,
+                message: message,
+                preferredContact: document.querySelector('input[name="preferredContact"]:checked')?.value || 'Not specified',
+                cartItems: cart,
+                cartTotal: cartTotal,
+                dateSubmitted: new Date().toLocaleString()
+            };
+            
+            // Save to localStorage for admin reference
+            const quotes = JSON.parse(localStorage.getItem('safesolQuotes') || '[]');
+            quotes.push(quoteData);
+            localStorage.setItem('safesolQuotes', JSON.stringify(quotes));
+            
+            // Clear cart after submission
+            localStorage.removeItem('safesolCart');
+            
+            // Show success message
+            showNotification('Thank you! Your quote request has been sent. We will contact you within 24 hours.', 'success');
+            
+            // Reset form
+            this.reset();
+            
+            // Reload cart preview
+            loadCartPreview();
+        });
+        
+        // Load cart preview on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCartPreview();
+        });
+        
+        // Mobile menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+        }
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (navbar && window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else if (navbar) {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

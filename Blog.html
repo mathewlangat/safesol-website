@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safesol | Cleaning Tips & Tutorials</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Blue Shades Color Palette */
+        :root {
+            --blue-deep: #0a2b4e;
+            --blue-dark: #1e3a5f;
+            --blue-medium: #2c4e6e;
+            --blue-accent: #4a90d9;
+            --white: #ffffff;
+            --gray: #e5e7eb;
+            --text-light: #6b7280;
+            --text-dark: #1f2937;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 43, 78, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(94, 143, 185, 0.3);
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 0;
+            background: rgba(5, 26, 47, 0.98);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--blue-accent), var(--blue-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--blue-accent);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #7eafe0;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Blog Hero */
+        .blog-hero {
+            background: linear-gradient(135deg, var(--blue-deep), var(--blue-dark));
+            padding: 150px 0 60px;
+            text-align: center;
+            color: white;
+        }
+
+        .blog-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Blog Categories */
+        .blog-categories {
+            background: white;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray);
+            position: sticky;
+            top: 70px;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            z-index: 99;
+        }
+
+        .category-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 5px 0;
+        }
+
+        .category-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .category-scroll::-webkit-scrollbar-track {
+            background: var(--gray);
+            border-radius: 10px;
+        }
+
+        .category-scroll::-webkit-scrollbar-thumb {
+            background: var(--blue-accent);
+            border-radius: 10px;
+        }
+
+        .cat-btn {
+            padding: 8px 24px;
+            background: transparent;
+            border: 2px solid var(--gray);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .cat-btn:hover {
+            border-color: var(--blue-accent);
+            color: var(--blue-accent);
+        }
+
+        .cat-btn.active {
+            background: var(--blue-accent);
+            border-color: var(--blue-accent);
+            color: white;
+        }
+
+        /* Blog Grid */
+        .blog-section {
+            padding: 60px 0;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid var(--gray);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border-color: var(--blue-accent);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.08);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-category-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #d6e8f7;
+            color: var(--blue-dark);
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .blog-content h3 {
+            font-size: 1.2rem;
+            color: var(--blue-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .blog-content p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray);
+        }
+
+        .blog-date {
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+
+        .blog-read-more {
+            color: var(--blue-accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .blog-read-more:hover {
+            color: var(--blue-dark);
+            gap: 10px;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            grid-column: 1 / -1;
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-deep));
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .newsletter h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            min-width: 250px;
+        }
+
+        .newsletter-btn {
+            padding: 12px 30px;
+            background: var(--blue-accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--blue-light);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--blue-deep);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #7eafe0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--blue-deep);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: 0.3s ease;
+                gap: 2rem;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-broom"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Safesol Crystal Limited</h1>
+                    <p>CLEANING SOLUTIONS</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="quotation.html">Quotation</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="blog-hero">
+            <div class="container">
+                <h1 class="animate-fade-up">Cleaning Tips & Tutorials</h1>
+                <p class="animate-fade-up delay-1">Expert advice, DIY solutions, and professional cleaning guides to keep your space spotless</p>
+            </div>
+        </section>
+
+        <!-- Blog Categories -->
+        <section class="blog-categories">
+            <div class="container">
+                <div class="category-scroll">
+                    <button class="cat-btn active" data-category="all">All Posts</button>
+                    <button class="cat-btn" data-category="bathroom">Bathroom</button>
+                    <button class="cat-btn" data-category="kitchen">Kitchen</button>
+                    <button class="cat-btn" data-category="carpet">Carpet & Floor</button>
+                    <button class="cat-btn" data-category="eco">Eco-Friendly</button>
+                    <button class="cat-btn" data-category="organization">Organization</button>
+                    <button class="cat-btn" data-category="tips">Quick Tips</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Grid -->
+        <section class="blog-section">
+            <div class="container">
+                <div class="blog-grid" id="blogGrid"></div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter">
+            <div class="container">
+                <h3>Subscribe to Our Newsletter</h3>
+                <p>Get weekly cleaning tips and exclusive offers straight to your inbox</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Safesol</h3>
+                    <p>Your trusted partner for professional cleaning solutions in Kenya.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="quotation.html">Quotation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> 0723457235</p>
+                    <p><i class="fas fa-envelope"></i> info@safesol.co.ke</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Safesol Cleaning Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Blog Posts Data
+        const blogPosts = [
+            // BATHROOM CATEGORY
+            {
+                id: 1,
+                title: "How to Deep Clean Your Bathroom in 15 Minutes",
+                excerpt: "Quick and effective techniques to make your bathroom sparkle without spending hours scrubbing. Perfect for busy schedules.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "bathroom",
+                date: "March 15, 2026",
+                readTime: "5 min read"
+            },
+            {
+                id: 2,
+                title: "Remove Hard Water Stains from Shower Glass",
+                excerpt: "Say goodbye to stubborn white spots on your shower doors with these simple household solutions.",
+                image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?w=400&h=250&fit=crop",
+                category: "bathroom",
+                date: "March 10, 2026",
+                readTime: "4 min read"
+            },
+            {
+                id: 3,
+                title: "How to Clean Grout Between Tiles",
+                excerpt: "Restore your bathroom tiles to their original color with these effective grout cleaning methods.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "bathroom",
+                date: "March 5, 2026",
+                readTime: "6 min read"
+            },
+
+            // KITCHEN CATEGORY
+            {
+                id: 4,
+                title: "Kitchen Deep Cleaning Checklist for a Hygienic Home",
+                excerpt: "Don't miss these important spots when cleaning your kitchen. A complete guide to a germ-free kitchen.",
+                image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=250&fit=crop",
+                category: "kitchen",
+                date: "March 12, 2026",
+                readTime: "7 min read"
+            },
+            {
+                id: 5,
+                title: "How to Clean Your Oven Without Harsh Chemicals",
+                excerpt: "Natural oven cleaning solutions using baking soda and vinegar that actually work.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "kitchen",
+                date: "March 8, 2026",
+                readTime: "5 min read"
+            },
+            {
+                id: 6,
+                title: "Remove Grease from Kitchen Cabinets",
+                excerpt: "Simple techniques to cut through built-up grease and restore your cabinets' shine.",
+                image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=250&fit=crop",
+                category: "kitchen",
+                date: "March 3, 2026",
+                readTime: "4 min read"
+            },
+
+            // CARPET & FLOOR CATEGORY
+            {
+                id: 7,
+                title: "How to Remove Tough Stains from Carpets",
+                excerpt: "Step-by-step guide to removing wine, coffee, and pet stains from your carpets permanently.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "carpet",
+                date: "March 14, 2026",
+                readTime: "6 min read"
+            },
+            {
+                id: 8,
+                title: "Best Way to Mop Hardwood Floors Without Damaging Them",
+                excerpt: "Protect your investment with these proper mopping techniques for wood floors.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "carpet",
+                date: "March 9, 2026",
+                readTime: "5 min read"
+            },
+            {
+                id: 9,
+                title: "DIY Carpet Freshener Recipe",
+                excerpt: "Make your own natural carpet deodorizer using ingredients from your pantry.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "carpet",
+                date: "March 2, 2026",
+                readTime: "3 min read"
+            },
+
+            // ECO-FRIENDLY CATEGORY
+            {
+                id: 10,
+                title: "5 Natural Cleaning Solutions Using Vinegar and Baking Soda",
+                excerpt: "Chemical-free alternatives that are safe for your family and the environment.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "eco",
+                date: "March 13, 2026",
+                readTime: "6 min read"
+            },
+            {
+                id: 11,
+                title: "Essential Oils for Natural Home Cleaning",
+                excerpt: "How to use essential oils to disinfect, deodorize, and add fragrance naturally.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "eco",
+                date: "March 7, 2026",
+                readTime: "5 min read"
+            },
+            {
+                id: 12,
+                title: "Zero Waste Cleaning: Reusable Alternatives",
+                excerpt: "Replace disposable cleaning products with sustainable, eco-friendly options.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "eco",
+                date: "March 1, 2026",
+                readTime: "4 min read"
+            },
+
+            // ORGANIZATION CATEGORY
+            {
+                id: 13,
+                title: "Declutter Your Home: Room by Room Guide",
+                excerpt: "Simple strategies to organize every room in your house and keep it that way.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "organization",
+                date: "March 11, 2026",
+                readTime: "8 min read"
+            },
+            {
+                id: 14,
+                title: "Weekly Cleaning Schedule for Busy Families",
+                excerpt: "Maintain a clean home even with a hectic schedule using this simple routine.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "organization",
+                date: "March 6, 2026",
+                readTime: "5 min read"
+            },
+            {
+                id: 15,
+                title: "How to Organize Your Cleaning Supplies",
+                excerpt: "Create an efficient cleaning caddy that makes chores faster and easier.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "organization",
+                date: "February 28, 2026",
+                readTime: "4 min read"
+            },
+
+            // QUICK TIPS CATEGORY
+            {
+                id: 16,
+                title: "Streak-Free Window Cleaning: Professional Secrets",
+                excerpt: "Achieve crystal clear windows with these expert tips from professional cleaners.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "tips",
+                date: "March 4, 2026",
+                readTime: "4 min read"
+            },
+            {
+                id: 17,
+                title: "How to Clean a Washing Machine",
+                excerpt: "Extend the life of your appliance with this simple monthly cleaning routine.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "tips",
+                date: "February 25, 2026",
+                readTime: "3 min read"
+            },
+            {
+                id: 18,
+                title: "Remove Pet Hair from Furniture Easily",
+                excerpt: "Simple tricks to eliminate pet hair from sofas, beds, and carpets.",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=250&fit=crop",
+                category: "tips",
+                date: "February 20, 2026",
+                readTime: "3 min read"
+            }
+        ];
+
+        // Render Blog Posts
+        function renderBlogPosts(posts) {
+            const grid = document.getElementById('blogGrid');
+            if (!grid) return;
+            
+            if (posts.length === 0) {
+                grid.innerHTML = '<div class="no-results"><i class="fas fa-search"></i> No posts found in this category.</div>';
+                return;
+            }
+            
+            grid.innerHTML = posts.map(post => `
+                <div class="blog-card animate-on-scroll" data-category="${post.category}">
+                    <div class="blog-image">
+                        <img src="${post.image}" alt="${post.title}" onerror="this.src='https://placehold.co/400x250/1e3a5f/white?text=${post.title.replace(/ /g, '+')}'">
+                    </div>
+                    <div class="blog-content">
+                        <span class="blog-category-tag"><i class="fas fa-tag"></i> ${post.category.charAt(0).toUpperCase() + post.category.slice(1)}</span>
+                        <h3>${post.title}</h3>
+                        <p>${post.excerpt}</p>
+                        <div class="blog-meta">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> ${post.date}</span>
+                            <a href="#" class="blog-read-more" onclick="showNotification('Article coming soon! Stay tuned for the full guide.', 'info'); return false;">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Re-trigger scroll animations
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            animateElements.forEach(el => observer.observe(el));
+        }
+
+        // Filter by Category
+        let currentCategory = 'all';
+        
+        function filterPosts() {
+            let filtered = [...blogPosts];
+            if (currentCategory !== 'all') {
+                filtered = blogPosts.filter(post => post.category === currentCategory);
+            }
+            renderBlogPosts(filtered);
+        }
+
+        // Show Notification
+        function showNotification(message, type) {
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i> ${message}`;
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: #1e3a5f;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 12px;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+                font-family: 'Poppins', sans-serif;
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Newsletter Subscription
+        document.getElementById('newsletterForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = e.target.querySelector('input').value;
+            if (email) {
+                showNotification(`Thanks for subscribing! You'll receive cleaning tips at ${email}`, 'success');
+                e.target.reset();
+            }
+        });
+
+        // Initialize
+        function init() {
+            renderBlogPosts(blogPosts);
+            
+            // Category buttons
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.getAttribute('data-category');
+                    filterPosts();
+                });
+            });
+        }
+
+        // Make showNotification global for onclick
+        window.showNotification = showNotification;
+        
+        document.addEventListener('DOMContentLoaded', init);
+        
+        // Mobile menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+        }
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (navbar && window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else if (navbar) {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Add animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

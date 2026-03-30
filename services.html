@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safesol | Professional Cleaning Services</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Blue Shades Color Palette */
+        :root {
+            --blue-deep: #0a2b4e;
+            --blue-dark: #1e3a5f;
+            --blue-medium: #2c4e6e;
+            --blue-soft: #3d6b8c;
+            --blue-light: #5b8fb9;
+            --blue-lighter: #7eafe0;
+            --blue-accent: #4a90d9;
+            --white: #ffffff;
+            --gray: #e5e7eb;
+            --text-light: #6b7280;
+            --text-dark: #1f2937;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 43, 78, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(94, 143, 185, 0.3);
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 0;
+            background: rgba(5, 26, 47, 0.98);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--blue-accent), var(--blue-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: var(--blue-accent);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--blue-lighter);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Services Hero */
+        .services-hero {
+            background: linear-gradient(135deg, var(--blue-deep), var(--blue-dark));
+            padding: 150px 0 60px;
+            text-align: center;
+            color: white;
+        }
+
+        .services-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .services-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Service Category Section */
+        .service-category {
+            padding: 50px 0;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .service-category:last-child {
+            border-bottom: none;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: var(--blue-dark);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--blue-accent);
+            display: inline-block;
+        }
+
+        /* HORIZONTAL SCROLL - Services in One Line */
+        .services-horizontal {
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            padding: 20px 0;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .services-horizontal::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .services-horizontal::-webkit-scrollbar-track {
+            background: var(--gray);
+            border-radius: 10px;
+        }
+
+        .services-horizontal::-webkit-scrollbar-thumb {
+            background: var(--blue-accent);
+            border-radius: 10px;
+        }
+
+        .services-row {
+            display: inline-flex;
+            gap: 1.5rem;
+            white-space: normal;
+        }
+
+        /* Service Card - Compact */
+        .service-card-horizontal {
+            width: 280px;
+            flex-shrink: 0;
+            background: white;
+            border-radius: 16px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            white-space: normal;
+        }
+
+        .service-card-horizontal:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--blue-accent);
+        }
+
+        .service-card-horizontal .service-icon {
+            font-size: 1.8rem;
+            color: var(--blue-accent);
+            margin-bottom: 0.8rem;
+        }
+
+        .service-card-horizontal h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--blue-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card-horizontal p {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .service-features {
+            list-style: none;
+            margin: 0.5rem 0;
+        }
+
+        .service-features li {
+            font-size: 0.7rem;
+            padding: 0.2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-light);
+        }
+
+        .service-features li i {
+            color: var(--blue-accent);
+            font-size: 0.65rem;
+        }
+
+        .price-tag {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background: var(--blue-dark);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .cta-services {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-deep));
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-services h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--blue-accent);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-light);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--blue-deep);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--blue-lighter);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--blue-deep);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: 0.3s ease;
+                gap: 2rem;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            .services-hero h1 {
+                font-size: 2rem;
+            }
+            .service-card-horizontal {
+                width: 260px;
+            }
+            .category-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-broom"></i></div>
+                <div class="logo-text"><h1>Safesol Crystal Limited</h1><p>CLEANING SOLUTIONS</p></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html" class="active">Services</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="quotation.html">Quotation</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="services-hero">
+            <div class="container">
+                <h1 class="animate-fade-up">Our Cleaning Services</h1>
+                <p class="animate-fade-up delay-1">Professional, reliable, and affordable cleaning solutions tailored to your needs</p>
+            </div>
+        </section>
+
+        <!-- RESIDENTIAL CLEANING CATEGORY -->
+        <section class="service-category animate-on-scroll">
+            <div class="container">
+                <h2 class="category-title"><i class="fas fa-home"></i> Residential Cleaning</h2>
+                <div class="services-horizontal">
+                    <div class="services-row">
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-broom"></i></div>
+                            <h3>Standard House Cleaning</h3>
+                            <p>Complete home cleaning including dusting, vacuuming, mopping.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Dusting all surfaces</li>
+                                <li><i class="fas fa-check"></i> Vacuuming carpets</li>
+                                <li><i class="fas fa-check"></i> Kitchen & bathroom</li>
+                            </ul>
+                            <span class="price-tag">From KSh 2,500</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-hand-sparkles"></i></div>
+                            <h3>Deep Cleaning</h3>
+                            <p>Intensive cleaning that reaches every corner of your home.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Behind appliances</li>
+                                <li><i class="fas fa-check"></i> Inside cabinets</li>
+                                <li><i class="fas fa-check"></i> Baseboards & sills</li>
+                            </ul>
+                            <span class="price-tag">From KSh 5,000</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-calendar-alt"></i></div>
+                            <h3>Regular Maintenance</h3>
+                            <p>Scheduled cleaning weekly, bi-weekly, or monthly.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Consistent schedule</li>
+                                <li><i class="fas fa-check"></i> Same dedicated team</li>
+                                <li><i class="fas fa-check"></i> Customized plan</li>
+                            </ul>
+                            <span class="price-tag">From KSh 3,000/month</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-truck-moving"></i></div>
+                            <h3>Move-In/Out Cleaning</h3>
+                            <p>Comprehensive cleaning for moving in or out.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Full sanitization</li>
+                                <li><i class="fas fa-check"></i> Appliance cleaning</li>
+                                <li><i class="fas fa-check"></i> Floor deep cleaning</li>
+                            </ul>
+                            <span class="price-tag">From KSh 6,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMERCIAL CLEANING CATEGORY -->
+        <section class="service-category animate-on-scroll">
+            <div class="container">
+                <h2 class="category-title"><i class="fas fa-building"></i> Commercial & Office Cleaning</h2>
+                <div class="services-horizontal">
+                    <div class="services-row">
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-briefcase"></i></div>
+                            <h3>Office Cleaning</h3>
+                            <p>Daily or weekly office cleaning services.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Workstation cleaning</li>
+                                <li><i class="fas fa-check"></i> Breakroom cleaning</li>
+                                <li><i class="fas fa-check"></i> Restroom sanitization</li>
+                            </ul>
+                            <span class="price-tag">From KSh 3,000/visit</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-store"></i></div>
+                            <h3>Retail Cleaning</h3>
+                            <p>Keep your retail space inviting and hygienic.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Floor polishing</li>
+                                <li><i class="fas fa-check"></i> Glass & display cleaning</li>
+                                <li><i class="fas fa-check"></i> After-hours service</li>
+                            </ul>
+                            <span class="price-tag">From KSh 4,000/visit</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-church"></i></div>
+                            <h3>Venue Cleaning</h3>
+                            <p>Specialized cleaning for churches and event venues.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Large area cleaning</li>
+                                <li><i class="fas fa-check"></i> Pre/post event</li>
+                                <li><i class="fas fa-check"></i> Flexible scheduling</li>
+                            </ul>
+                            <span class="price-tag">Custom Quote</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-school"></i></div>
+                            <h3>School Cleaning</h3>
+                            <p>Safe, hygienic cleaning for educational facilities.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Classroom sanitization</li>
+                                <li><i class="fas fa-check"></i> Playground cleaning</li>
+                                <li><i class="fas fa-check"></i> Child-safe products</li>
+                            </ul>
+                            <span class="price-tag">Custom Quote</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARPET & UPHOLSTERY CATEGORY -->
+        <section class="service-category animate-on-scroll">
+            <div class="container">
+                <h2 class="category-title"><i class="fas fa-couch"></i> Carpet & Upholstery Cleaning</h2>
+                <div class="services-horizontal">
+                    <div class="services-row">
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-carpet"></i></div>
+                            <h3>Carpet Steam Cleaning</h3>
+                            <p>Hot water extraction deep cleaning.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Deep stain removal</li>
+                                <li><i class="fas fa-check"></i> Allergen elimination</li>
+                                <li><i class="fas fa-check"></i> Quick drying</li>
+                            </ul>
+                            <span class="price-tag">From KSh 1,500/room</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-couch"></i></div>
+                            <h3>Upholstery Cleaning</h3>
+                            <p>Professional cleaning for sofas and chairs.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Fabric-safe cleaning</li>
+                                <li><i class="fas fa-check"></i> Stain treatment</li>
+                                <li><i class="fas fa-check"></i> Odor removal</li>
+                            </ul>
+                            <span class="price-tag">From KSh 1,500</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-bed"></i></div>
+                            <h3>Mattress Cleaning</h3>
+                            <p>Deep cleaning and sanitization.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Dust mite removal</li>
+                                <li><i class="fas fa-check"></i> Stain treatment</li>
+                                <li><i class="fas fa-check"></i> Odor elimination</li>
+                            </ul>
+                            <span class="price-tag">From KSh 1,200</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INDUSTRIAL CLEANING CATEGORY -->
+        <section class="service-category animate-on-scroll">
+            <div class="container">
+                <h2 class="category-title"><i class="fas fa-industry"></i> Industrial & Specialized Cleaning</h2>
+                <div class="services-horizontal">
+                    <div class="services-row">
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-factory"></i></div>
+                            <h3>Warehouse Cleaning</h3>
+                            <p>Industrial cleaning for warehouses.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Sweeping & scrubbing</li>
+                                <li><i class="fas fa-check"></i> High dusting</li>
+                                <li><i class="fas fa-check"></i> Waste removal</li>
+                            </ul>
+                            <span class="price-tag">Custom Quote</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-biohazard"></i></div>
+                            <h3>Medical Cleaning</h3>
+                            <p>Specialized disinfection for medical facilities.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Hospital-grade products</li>
+                                <li><i class="fas fa-check"></i> PPE-equipped staff</li>
+                                <li><i class="fas fa-check"></i> Infection control</li>
+                            </ul>
+                            <span class="price-tag">Custom Quote</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-water"></i></div>
+                            <h3>Post-Construction</h3>
+                            <p>Cleanup after construction projects.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Dust removal</li>
+                                <li><i class="fas fa-check"></i> Window cleaning</li>
+                                <li><i class="fas fa-check"></i> Debris removal</li>
+                            </ul>
+                            <span class="price-tag">From KSh 8,000</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-car"></i></div>
+                            <h3>Vehicle Cleaning</h3>
+                            <p>Professional cleaning for fleet vehicles.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Exterior wash & wax</li>
+                                <li><i class="fas fa-check"></i> Interior vacuuming</li>
+                                <li><i class="fas fa-check"></i> Fleet scheduling</li>
+                            </ul>
+                            <span class="price-tag">From KSh 1,500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DISINFECTION CATEGORY -->
+        <section class="service-category animate-on-scroll">
+            <div class="container">
+                <h2 class="category-title"><i class="fas fa-shield-virus"></i> Disinfection & Sanitization</h2>
+                <div class="services-horizontal">
+                    <div class="services-row">
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-spray-can-sparkles"></i></div>
+                            <h3>Electrostatic Disinfection</h3>
+                            <p>Advanced technology for complete coverage.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> 360-degree coverage</li>
+                                <li><i class="fas fa-check"></i> Hospital-grade products</li>
+                                <li><i class="fas fa-check"></i> Quick drying</li>
+                            </ul>
+                            <span class="price-tag">From KSh 5,000</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-fog"></i></div>
+                            <h3>Fogging & Misting</h3>
+                            <p>Complete area sanitization.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Large area coverage</li>
+                                <li><i class="fas fa-check"></i> Air & surface disinfection</li>
+                                <li><i class="fas fa-check"></i> Odor elimination</li>
+                            </ul>
+                            <span class="price-tag">From KSh 3,000</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                            <h3>Virus Sanitization</h3>
+                            <p>Specialized COVID-19 protocols.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> CDC-compliant</li>
+                                <li><i class="fas fa-check"></i> High-touch focus</li>
+                                <li><i class="fas fa-check"></i> Certification provided</li>
+                            </ul>
+                            <span class="price-tag">Custom Quote</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WINDOW & EXTERIOR CATEGORY -->
+        <section class="service-category animate-on-scroll">
+            <div class="container">
+                <h2 class="category-title"><i class="fas fa-window-maximize"></i> Window & Exterior Cleaning</h2>
+                <div class="services-horizontal">
+                    <div class="services-row">
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-window-maximize"></i></div>
+                            <h3>Window Cleaning</h3>
+                            <p>Streak-free window cleaning.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Interior & exterior</li>
+                                <li><i class="fas fa-check"></i> Track & sill cleaning</li>
+                                <li><i class="fas fa-check"></i> High-rise capable</li>
+                            </ul>
+                            <span class="price-tag">From KSh 100/window</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-tint"></i></div>
+                            <h3>Pressure Washing</h3>
+                            <p>High-pressure cleaning for exteriors.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Driveways & walkways</li>
+                                <li><i class="fas fa-check"></i> Building exteriors</li>
+                                <li><i class="fas fa-check"></i> Parking lots</li>
+                            </ul>
+                            <span class="price-tag">From KSh 2,500</span>
+                        </div>
+                        <div class="service-card-horizontal">
+                            <div class="service-icon"><i class="fas fa-leaf"></i></div>
+                            <h3>Gutter Cleaning</h3>
+                            <p>Debris removal and downspout clearing.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Debris removal</li>
+                                <li><i class="fas fa-check"></i> Downspout clearing</li>
+                                <li><i class="fas fa-check"></i> Inspection services</li>
+                            </ul>
+                            <span class="price-tag">From KSh 3,500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-services">
+            <div class="container">
+                <h3>Need a Custom Cleaning Plan?</h3>
+                <p>Contact us for a free consultation and personalized quote tailored to your specific needs</p>
+                <a href="quotation.html" class="btn-primary">Request a Free Quote</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Safesol</h3>
+                    <p>Your trusted partner for professional cleaning solutions in Kenya.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="quotation.html">Quotation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> 0723457235</p>
+                    <p><i class="fas fa-envelope"></i> info@safesol.co.ke</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Safesol Cleaning Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animations
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        animateElements.forEach(el => observer.observe(el));
+        
+        // Mobile menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+        }
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (navbar && window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else if (navbar) {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
